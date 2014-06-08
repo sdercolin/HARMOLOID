@@ -5,11 +5,15 @@
 #include <string>
 using namespace std;
 
+/*主界面和主要模块函数的实现。*/
+
+//类的静态数据成员初始化
 long TRACK::TrackNumTotal = 0;
 long TRACK::HarmoNumTotal = 0;
 
 void main()
 {
+	//初始化
 	TRACK* TrackList = NULL;
 	TRACK* HarmoList = NULL;
 	MIDIData* pMIDIData = NULL;
@@ -24,10 +28,13 @@ void main()
 	wstring* pFilePath = &FilePath;
 	wstring MainCommand = DEFAULT_STR;
 
-	wcout<<"HARMOLOID Beta 0.1"<<endl<<"sdercolin (C) 2014"<<endl<<endl;
+	//打印程序信息
+	wcout<<"HARMOLOID Beta 0.2"<<endl<<"sdercolin (C) 2014"<<endl<<endl;
+	//主程序界面循环
 	while ( true )
 	{
-		MainCommand = ReceiveMainCommand( pIsLoaded, pIsTonalized, pFilePath, TrackList, HarmoList );//接收主控制命令
+		//接收主控制命令
+		MainCommand = ReceiveMainCommand( pIsLoaded, pIsTonalized, pFilePath, TrackList, HarmoList );
 		//主选项操作分支
 		if( MainCommand == L"1" )
 		{
@@ -36,6 +43,7 @@ void main()
 			{
 				while ( true )
 				{
+					//判定是否已有载入的文件，并询问是否重新载入
 					wcout<<"File has already been loaded."<<endl;
 					wcout<<"Do you want to load a new file?"<<endl;
 					wcout<<"1.Yes"<<endl;
@@ -88,15 +96,16 @@ void main()
 			wcout<<"The option you input is wrong, please try again."<<endl;
 		}
 	}
+	//程序退出
 	wcout<<"Thank you for using."<<endl;
-	system("PAUSE");
+	system("pause");
 	MIDIData_Delete (pMIDIData);
 	return;
-}
-
+}//主函数
 wstring ReceiveMainCommand( bool* pIsLoaded, bool* pIsTonalized, wstring* pFilePath, TRACK* TrackList, TRACK* HarmoList )
 {
 	wstring CommandingOpt= DEFAULT_STR;
+	//根据文件状态不同输出不同的提示文字
 	if ( !*pIsLoaded )
 	{
 		wcout<<endl<<"File has not been loaded."<<endl<<endl;
@@ -135,9 +144,10 @@ wstring ReceiveMainCommand( bool* pIsLoaded, bool* pIsTonalized, wstring* pFileP
 	}
 	wcout<<"6.Quit"<<endl;
 	wcout<<endl<<"Please enter a number listed above:";
+	//读取命令
 	wcin>>CommandingOpt;
 	return CommandingOpt;
-}
+}//主程序界面命令函数
 void PrintTrackList( TRACK* TrackList, TRACK* HarmoList )
 {
 	wcout<<"Track List"<<endl;
@@ -153,7 +163,7 @@ void PrintTrackList( TRACK* TrackList, TRACK* HarmoList )
 			}
 		}
 	return;
-}
+}//打印音轨信息
 void LoadMIDI( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* pFilePath, MIDIData* &pMIDIData, MIDITrack* &pMIDITrack, MIDITrack* &npMIDITrack, MIDIEvent* &pMIDIEvent, MIDIEvent* &npMIDIEvent )
 {
 	long Measure=0;
@@ -166,6 +176,7 @@ void LoadMIDI( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* p
 	long* pTime=&Time;
 	wstring LoadingPath;
 
+	//判定载入的文件是否有效，并进行格式转换
 	for ( int i=0; pMIDIData == NULL; i++ )
 	{
 		if ( i>0 )
@@ -181,6 +192,7 @@ void LoadMIDI( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* p
 				pMIDIData = NULL;
 				wcout<<"Error: MIDI file(Format=2) is not valid."<<endl;
 				wcout<<"Loading failed."<<endl;
+				system("pause");
 				return;
 			}
 	if(MIDIData_GetFormat(pMIDIData)==0)
@@ -202,6 +214,8 @@ void LoadMIDI( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* p
 					pMIDITrack = MIDITrack_GetNextTrack(pMIDITrack);
 				}
 			}
+
+	//建立音轨列表
 	TRACK::TrackNumTotal = MIDIData_GetNumTrack(pMIDIData);
 	TrackList = new TRACK[TRACK::TrackNumTotal];
 	long HarmoNumMax = TRACK::TrackNumTotal * HARMONY_TYPE_MAX;
@@ -233,6 +247,7 @@ void LoadMIDI( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* p
 		}
 		TrackList[TrackNum].SetHarmonic( false );
 		TrackList[TrackNum].SetIsTonalized( false );
+		//建立每个音轨的音符列表，读取音符信息
 		TrackList[TrackNum].CreateNoteList(EventNumTotal);
 		pMIDIEvent = MIDITrack_GetFirstEvent(pMIDITrack);
 		npMIDIEvent = pMIDIEvent;
@@ -245,6 +260,7 @@ void LoadMIDI( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* p
 				{
 					wcout<<"Error: Overlapping notes found."<<endl;
 					wcout<<"Loading failed."<<endl;
+					system("pause");
 					pMIDIData = NULL;
 					return;
 				}
@@ -253,6 +269,7 @@ void LoadMIDI( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* p
 				{
 					npMIDIEvent=MIDIEvent_GetNextEvent(npMIDIEvent);
 				}
+				TrackList[TrackNum].NoteList[NoteNum].SetNoteNum(NoteNum);
 				TrackList[TrackNum].NoteList[NoteNum].SetNoteKey(MIDIEvent_GetKey(pMIDIEvent));
 				TrackList[TrackNum].NoteList[NoteNum].SetNoteTimeOn(MIDIEvent_GetTime(pMIDIEvent));
 				TrackList[TrackNum].NoteList[NoteNum].SetNoteTimeOff(MIDIEvent_GetTime(npMIDIEvent));
@@ -260,6 +277,7 @@ void LoadMIDI( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* p
 			}
 		}
 		TrackList[TrackNum].SetNoteNumTotal(NoteNum);
+		//建立每个音轨的小节列表，读取小节信息
 		MIDIData_BreakTime (pMIDIData, MIDITrack_GetEndTime(pMIDITrack), pMeasure, pBeat, pTick);
 		long MaxBarNum = *pMeasure + 1;
 		TrackList[TrackNum].CreateBarList(MaxBarNum);
@@ -316,8 +334,9 @@ void LoadMIDI( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* p
 	*pIsLoaded = true;
 	*pFilePath = LoadingPath;
 	wcout<<endl<<"The MIDI file is successfully loaded."<<endl<<endl;
+	system("pause");
 	return;
-}
+}//载入MIDI函数
 void Renew( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* pFilePath, MIDIData* &pMIDIData, MIDITrack* &pMIDITrack, MIDITrack* &npMIDITrack, MIDIEvent* &pMIDIEvent, MIDIEvent* &npMIDIEvent, bool* pIsTonalized )
 {
 	delete[] TrackList;
@@ -332,61 +351,94 @@ void Renew( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* pFil
 	pMIDIEvent = NULL;
 	npMIDIEvent = NULL;
 	return;
-}
+}//初始化函数
 void SaveMIDI( TRACK* &TrackList, TRACK* &HarmoList, wstring FilePath, MIDIData* &pMIDIData, MIDITrack* &pMIDITrack, MIDITrack* &npMIDITrack, MIDIEvent* &pMIDIEvent, MIDIEvent* &npMIDIEvent )
 {
+	//将本程序的数据转换成MIDI数据
 	long NoteNum;
 	for( long i=0; i<TRACK::HarmoNumTotal; i++ )
 	{
-		npMIDITrack = MIDIData_GetTrack( pMIDIData, HarmoList[i].GetParentTrackNum() );
-		pMIDITrack = MIDITrack_CreateClone( npMIDITrack );
-		MIDIData_AddTrack ( pMIDIData, pMIDITrack );
-		MIDITrack_SetName( pMIDITrack, HarmoList[i].GetTrackName().c_str());
-		NoteNum = 0;
-		forEachEvent( pMIDITrack, pMIDIEvent )
+		if (!HarmoList[i].TrackIsSaved())
 		{
-			if ( MIDIEvent_IsNoteOn(pMIDIEvent) )
+			npMIDITrack = MIDIData_GetTrack( pMIDIData, HarmoList[i].GetParentTrackNum() );
+			pMIDITrack = MIDITrack_CreateClone( npMIDITrack );
+			MIDIData_AddTrack ( pMIDIData, pMIDITrack );
+			MIDITrack_SetName( pMIDITrack, HarmoList[i].GetTrackName().c_str());
+			NoteNum = 0;
+			forEachEvent( pMIDITrack, pMIDIEvent )
 			{
-				npMIDIEvent=pMIDIEvent;
-				while( !MIDIEvent_IsNoteOff(npMIDIEvent) || MIDIEvent_GetTime(pMIDIEvent) == MIDIEvent_GetTime(npMIDIEvent) )
+				if ( MIDIEvent_IsNoteOn(pMIDIEvent) )
 				{
-					npMIDIEvent=MIDIEvent_GetNextEvent(npMIDIEvent);
+					npMIDIEvent=pMIDIEvent;
+					while( !MIDIEvent_IsNoteOff(npMIDIEvent) || MIDIEvent_GetTime(pMIDIEvent) == MIDIEvent_GetTime(npMIDIEvent) )
+					{
+						npMIDIEvent=MIDIEvent_GetNextEvent(npMIDIEvent);
+					}
+					if(HarmoList[i].NoteList[NoteNum].NoteIsValid())
+					{
+						MIDIEvent_SetKey(pMIDIEvent, HarmoList[i].NoteList[NoteNum].GetNoteKey());
+						MIDIEvent_SetKey(npMIDIEvent, HarmoList[i].NoteList[NoteNum].GetNoteKey());
+					}
+					else
+					{
+						MIDIEvent_Delete(npMIDIEvent);
+						npMIDIEvent=MIDIEvent_GetPrevEvent(pMIDIEvent);
+						MIDIEvent_Delete(pMIDIEvent);
+						pMIDIEvent=npMIDIEvent;
+					}
+					NoteNum++;
 				}
-				MIDIEvent_SetKey(pMIDIEvent, HarmoList[i].NoteList[NoteNum].GetNoteKey());
-				MIDIEvent_SetKey(npMIDIEvent, HarmoList[i].NoteList[NoteNum].GetNoteKey());
-				NoteNum++;
 			}
+			HarmoList[i].SetIsSaved(true);
 		}
 	}
+	//保存MIDI文件
 	MIDIData_SaveAsSMF( pMIDIData, FilePath.c_str() );
 	wcout<<"File is successfully saved."<<endl;
+	system("pause");
 	return;
-}
+}//保存MIDI函数
 void SaveAsMIDI( TRACK* &TrackList, TRACK* &HarmoList, MIDIData* &pMIDIData, MIDITrack* &pMIDITrack, MIDITrack* &npMIDITrack, MIDIEvent* &pMIDIEvent, MIDIEvent* &npMIDIEvent )
 {
+	//将本程序的数据转换成MIDI数据
 	long NoteNum;
 	for( long i=0; i<TRACK::HarmoNumTotal; i++ )
 	{
-		npMIDITrack = MIDIData_GetTrack( pMIDIData, HarmoList[i].GetParentTrackNum() );
-		pMIDITrack = MIDITrack_CreateClone( npMIDITrack );
-		MIDIData_AddTrack ( pMIDIData, pMIDITrack );
-		MIDITrack_SetName( pMIDITrack, HarmoList[i].GetTrackName().c_str());
-		NoteNum = 0;
-		forEachEvent( pMIDITrack, pMIDIEvent )
+		if (!HarmoList[i].TrackIsSaved())
 		{
-			if ( MIDIEvent_IsNoteOn(pMIDIEvent) )
+			npMIDITrack = MIDIData_GetTrack( pMIDIData, HarmoList[i].GetParentTrackNum() );
+			pMIDITrack = MIDITrack_CreateClone( npMIDITrack );
+			MIDIData_AddTrack ( pMIDIData, pMIDITrack );
+			MIDITrack_SetName( pMIDITrack, HarmoList[i].GetTrackName().c_str());
+			NoteNum = 0;
+			forEachEvent( pMIDITrack, pMIDIEvent )
 			{
-				npMIDIEvent=pMIDIEvent;
-				while( !MIDIEvent_IsNoteOff(npMIDIEvent) || MIDIEvent_GetTime(pMIDIEvent) == MIDIEvent_GetTime(npMIDIEvent) )
+				if ( MIDIEvent_IsNoteOn(pMIDIEvent) )
 				{
-					npMIDIEvent=MIDIEvent_GetNextEvent(npMIDIEvent);
+					npMIDIEvent=pMIDIEvent;
+					while( !MIDIEvent_IsNoteOff(npMIDIEvent) || MIDIEvent_GetTime(pMIDIEvent) == MIDIEvent_GetTime(npMIDIEvent) )
+					{
+						npMIDIEvent=MIDIEvent_GetNextEvent(npMIDIEvent);
+					}
+					if(HarmoList[i].NoteList[NoteNum].NoteIsValid())
+					{
+						MIDIEvent_SetKey(pMIDIEvent, HarmoList[i].NoteList[NoteNum].GetNoteKey());
+						MIDIEvent_SetKey(npMIDIEvent, HarmoList[i].NoteList[NoteNum].GetNoteKey());
+					}
+					else
+					{
+						MIDIEvent_Delete(npMIDIEvent);
+						npMIDIEvent=MIDIEvent_GetPrevEvent(pMIDIEvent);
+						MIDIEvent_Delete(pMIDIEvent);
+						pMIDIEvent=npMIDIEvent;
+					}
+					NoteNum++;
 				}
-				MIDIEvent_SetKey(pMIDIEvent, HarmoList[i].NoteList[NoteNum].GetNoteKey());
-				MIDIEvent_SetKey(npMIDIEvent, HarmoList[i].NoteList[NoteNum].GetNoteKey());
-				NoteNum++;
 			}
+			HarmoList[i].SetIsSaved(true);
 		}
 	}
+	//读取用户输入的路径，另存为MIDI
 	long IsSaved = -1;
 	wstring SavingPath = DEFAULT_STR;
 	while( IsSaved != 1 )
@@ -400,9 +452,11 @@ void SaveAsMIDI( TRACK* &TrackList, TRACK* &HarmoList, MIDIData* &pMIDIData, MID
 		IsSaved = MIDIData_SaveAsSMF( pMIDIData, SavingPath.c_str() );
 	}
 	wcout<<"File is successfully saved."<<endl;
+	system("pause");
 	return;
-}
+}//另存为MIDI函数
 
+//其他功能函数
 bool StrIsDigit(wstring str) 
 { 
 	for( unsigned int i=0; i<str.size(); i++ ) 
@@ -413,7 +467,7 @@ bool StrIsDigit(wstring str)
 		 } 
     } 
 	return   true; 
-} ;
+} ;//判断字符串是否是纯数字
 long ConvertTonalityType(wstring TonalityType)
 {
 	for (int i = 0; i < 13; i++)
@@ -431,7 +485,7 @@ long ConvertTonalityType(wstring TonalityType)
 		}
 	}
 	return 13;
-}
+}//实现调号/音名的字符串型→long型的转换
 long SortArrayByGreatness( double data[], long greatness )
 {
 	double datacopy[12];
@@ -470,4 +524,4 @@ long SortArrayByGreatness( double data[], long greatness )
 		}
 	}
 	return order[greatness - 1];
-}
+}//查找一个double型数组里第n位大的数据在数组中的序号

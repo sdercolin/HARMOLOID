@@ -5,7 +5,15 @@
 #include <string>
 using namespace std;
 
-//NOTE类
+/*类的大部分成员函数实现。*/
+/*少数复杂的、功能明确的函数归置在其他几个源文件中。*/
+/*本文件中的函数功能在设计说明书中写明*/
+
+//NOTE类实现
+long NOTE::GetNoteNum()
+{
+	return NoteNum;
+}
 long NOTE::GetNoteKey()
 {
 	return NoteKey;
@@ -26,6 +34,14 @@ long NOTE::GetNoteLength()
 {
 	return NoteTimeOff-NoteTimeOn;
 }
+bool NOTE::NoteIsValid()
+{
+	return NoteValidity;
+}
+void NOTE::SetNoteNum(long nNoteNum)
+{
+	NoteNum=nNoteNum;
+}
 void NOTE::SetNoteKey(long nNoteKey)
 {
 	NoteKey=nNoteKey;
@@ -38,8 +54,12 @@ void NOTE::SetNoteTimeOff(long nNoteTimeOff)
 {
 	NoteTimeOff=nNoteTimeOff;
 }
+void NOTE::DeleteNote()
+{
+	NoteValidity = false;
+}
 
-//BAR类
+//BAR类实现
 long BAR::GetBarNum()
 {
 	return BarNum;
@@ -93,7 +113,6 @@ void BAR::SetEmptiness(bool nEmptiness)
 {
 	Emptiness=nEmptiness;
 }
-//void AdaptWithPassage(PASSAGE nPassage);
 void BAR::PrintBar()
 {
 	wcout<<"Bar "<<BarNum<<endl;
@@ -116,10 +135,14 @@ void BAR::PrintBar()
 	wcout<<endl;
 }
 
-//PASSAGE类
+//PASSAGE类实现
 long PASSAGE::GetPassageNum()
 {
 	return PassageNum;
+}
+long PASSAGE::GetTonalityOption(long Tonality)
+{
+	return TonalityOption[Tonality];
 }
 long PASSAGE::GetTonality()
 {
@@ -232,13 +255,19 @@ wstring PASSAGE::GetTonalityOptionAsString()
 	}
 }
 
-//TRACK类
+//TRACK类实现
 TRACK::TRACK()
 {
 	NoteList = NULL;
 	BarList = NULL;
 	PassageList = NULL;
 }
+TRACK::~TRACK()
+	{
+		void DeleteNoteList();
+		void DeleteBarList();
+		void DeletePassageList();
+	}
 void TRACK::CopyFrom( TRACK OriTrack )
 {
 	TrackNum = OriTrack.GetTrackNum();
@@ -318,6 +347,10 @@ bool TRACK::TrackIsTonalized()
 {
 	return IsTonalized;
 }
+bool TRACK::TrackIsSaved()
+{
+	return IsSaved;
+}
 void TRACK::SetTrackNum(long nTrackNum)
 {
 	TrackNum=nTrackNum;
@@ -370,52 +403,22 @@ void TRACK::SetIsTonalized(bool nIsTonalized)
 {
 	IsTonalized = nIsTonalized;
 }
-bool TRACK::CombinePassagesForAuto(long PassageNumber1, long PassageNumber2, bool IsSurelyTonalized)
+void TRACK::SetIsSaved(bool nIsSaved)
 {
-	bool IsCombined;
-	if (IsSurelyTonalized)
-	{
-		if (PassageList[PassageNumber1].GetTonality() == PassageList[PassageNumber2].GetTonality())
-		{
-			IsCombined = true;
-		}
-		else
-		{
-			IsCombined = false;
-		}
-	}
-	else
-	{
-		if (PassageList[PassageNumber1].GetTonalityOptionAsString() == PassageList[PassageNumber2].GetTonalityOptionAsString())
-		{
-			IsCombined = true;
-		}
-		else
-		{
-			IsCombined = false;
-		}
-	}
-	if (IsCombined)
-	{
-		PassageList[PassageNumber1].LastBarNum = PassageList[PassageNumber2].LastBarNum;
-		for (int i = PassageNumber2; i < PassageNumTotal; i++)
-		{
-			PassageList[i] = PassageList[i+1];
-			PassageList[i].SetPassageNum(i);
-		}
-		PassageNumTotal--;
-	}
-	return IsCombined;
+	IsSaved = nIsSaved;
 }
 void TRACK::DeleteNoteList()
 {
 	delete[] NoteList;
+	NoteNumTotal = 0;
 }
 void TRACK::DeleteBarList()
 {
 	delete[] BarList;
+	BarNumTotal = 0;
 }
 void TRACK::DeletePassageList()
 {
 	delete[] PassageList;
+	PassageNumTotal = 0;
 }

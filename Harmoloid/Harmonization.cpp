@@ -4,17 +4,23 @@
 #include <string>
 using namespace std;
 
+/*和声编写模块的函数实现。*/
+
 void Harmonization( TRACK* &TrackList, TRACK* &HarmoList )
 {
 	long TrackNum;
 	wstring HarmonizeCommand = DEFAULT_STR;
+	//循环本模块界面
 	while( true )
 	{
+		//输出提示文字
 		wcout<<endl<<"**************** HARMONIZATION ****************"<<endl;
 		wcout<<"Create harmonies for your tracks."<<endl;
 		Harmonization_PrintTrackList( TrackList );
 		wcout<<endl<<"Please enter a Track number listed above, or enter \"Q\" to quit Harmonization:";
+		//读取命令
 		wcin>>HarmonizeCommand; 
+		//判断命令类型，进入分支
 		if (HarmonizeCommand == L"Q")
 		{
 			break;
@@ -39,6 +45,7 @@ void Harmonization( TRACK* &TrackList, TRACK* &HarmoList )
 			}
 			else
 			{
+				//选择了可用的音轨后，询问和声类型
 				wstring HarmoTypeChooseCommand = DEFAULT_STR;
 				while (true)
 				{
@@ -71,6 +78,7 @@ void Harmonization( TRACK* &TrackList, TRACK* &HarmoList )
 						}
 						else
 						{
+							//和声类型确定后，开始计算和声
 							HarmoList[TRACK::HarmoNumTotal].CopyFrom(TrackList[TrackNum]);
 							bool ShiftKeySuccessful = HarmoList[TRACK::HarmoNumTotal].ShiftKey(HarmonyType);
 							if (ShiftKeySuccessful)
@@ -80,6 +88,7 @@ void Harmonization( TRACK* &TrackList, TRACK* &HarmoList )
 								HarmoList[TRACK::HarmoNumTotal].SetHarmonic(true);
 								HarmoList[TRACK::HarmoNumTotal].SetHarmonicType(HarmonyType);
 								HarmoList[TRACK::HarmoNumTotal].SetParentTrackNum(TrackNum);
+								HarmoList[TRACK::HarmoNumTotal].SetIsSaved(false);
 								TrackList[TrackNum].HarmoTrackNum[HarmonyType] = TRACK::HarmoNumTotal;
 								TRACK::HarmoNumTotal ++;
 								wcout<<"Harmonization is successful."<<endl;
@@ -89,6 +98,7 @@ void Harmonization( TRACK* &TrackList, TRACK* &HarmoList )
 							{
 								wcout<<"Error: Key limit exceeded."<<endl;
 								wcout<<"Harmonization failed."<<endl;
+								system("pause");
 							}
 							continue;
 						}
@@ -104,7 +114,7 @@ void Harmonization( TRACK* &TrackList, TRACK* &HarmoList )
 		}
 	}
 	return;
-}
+}//和声编写模块的总函数
 void Harmonization_PrintTrackList( TRACK* TrackList )
 {
 	wcout<<endl<<"Track List"<<endl;
@@ -116,7 +126,7 @@ void Harmonization_PrintTrackList( TRACK* TrackList )
 				wcout<<endl;
 			}
 		}
-}
+}//打印提示文字的函数
 bool TRACK::ShiftKey(long Harmonic_Type)
 {
 	switch (Harmonic_Type)
@@ -126,56 +136,96 @@ bool TRACK::ShiftKey(long Harmonic_Type)
 	case 1:
 		for (int i = 0; i < PassageNumTotal; i++)
 		{
-			for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
+			if (PassageList[i].GetTonality() == 12)
 			{
-				long sol_fa_syl = NoteList[j].GetNoteKey() % 12 - PassageList[i].GetTonality();
-				if (sol_fa_syl < 0)
+				for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
 				{
-					sol_fa_syl += 12;
+					NoteList[j].DeleteNote();
 				}
-				NoteList[j].SetNoteKey(NoteList[j].GetNoteKey() + thirdup_keyshift[sol_fa_syl]);
+			}
+			else
+			{
+				for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
+				{
+					long sol_fa_syl = NoteList[j].GetNoteKey() % 12 - PassageList[i].GetTonality();
+					if (sol_fa_syl < 0)
+					{
+						sol_fa_syl += 12;
+					}
+					NoteList[j].SetNoteKey(NoteList[j].GetNoteKey() + thirdup_keyshift[sol_fa_syl]);
+				}
 			}
 		}
 		break;
 	case 2:
 		for (int i = 0; i < PassageNumTotal; i++)
 		{
-			for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
+			if (PassageList[i].GetTonality() == 12)
 			{
-				long sol_fa_syl = NoteList[j].GetNoteKey() % 12 - PassageList[i].GetTonality();
-				if (sol_fa_syl < 0)
+				for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
 				{
-					sol_fa_syl += 12;
+					NoteList[j].DeleteNote();
 				}
-				NoteList[j].SetNoteKey(NoteList[j].GetNoteKey() + thirddown_keyshift[sol_fa_syl]);
+			}
+			else
+			{
+				for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
+				{
+					long sol_fa_syl = NoteList[j].GetNoteKey() % 12 - PassageList[i].GetTonality();
+					if (sol_fa_syl < 0)
+					{
+						sol_fa_syl += 12;
+					}
+					NoteList[j].SetNoteKey(NoteList[j].GetNoteKey() + thirddown_keyshift[sol_fa_syl]);
+				}
 			}
 		}
 		break;
 	case 3:
 		for (int i = 0; i < PassageNumTotal; i++)
 		{
-			for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
+			if (PassageList[i].GetTonality() == 12)
 			{
-				long sol_fa_syl = NoteList[j].GetNoteKey() % 12 - PassageList[i].GetTonality();
-				if (sol_fa_syl < 0)
+				for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
 				{
-					sol_fa_syl += 12;
-				}				
-				NoteList[j].SetNoteKey(NoteList[j].GetNoteKey() + thirddown_keyshift[sol_fa_syl] + 12);
+					NoteList[j].DeleteNote();
+				}
+			}
+			else
+			{
+				for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
+				{
+					long sol_fa_syl = NoteList[j].GetNoteKey() % 12 - PassageList[i].GetTonality();
+					if (sol_fa_syl < 0)
+					{
+						sol_fa_syl += 12;
+					}				
+					NoteList[j].SetNoteKey(NoteList[j].GetNoteKey() + thirddown_keyshift[sol_fa_syl] + 12);
+				}
 			}
 		}
 		break;
 	case 4:
 		for (int i = 0; i < PassageNumTotal; i++)
 		{
-			for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
+			if (PassageList[i].GetTonality() == 12)
 			{
-				long sol_fa_syl = NoteList[j].GetNoteKey() % 12 - PassageList[i].GetTonality();
-				if (sol_fa_syl < 0)
+				for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
 				{
-					sol_fa_syl += 12;
-				}				
-				NoteList[j].SetNoteKey(NoteList[j].GetNoteKey() + thirdup_keyshift[sol_fa_syl] - 12);
+					NoteList[j].DeleteNote();
+				}
+			}
+			else
+			{
+				for (int j = PassageList[i].GetFirstNoteNum(); j <= PassageList[i].GetLastNoteNum(); j++)
+				{
+					long sol_fa_syl = NoteList[j].GetNoteKey() % 12 - PassageList[i].GetTonality();
+					if (sol_fa_syl < 0)
+					{
+						sol_fa_syl += 12;
+					}				
+					NoteList[j].SetNoteKey(NoteList[j].GetNoteKey() + thirdup_keyshift[sol_fa_syl] - 12);
+				}
 			}
 		}
 		break;
@@ -202,7 +252,7 @@ bool TRACK::ShiftKey(long Harmonic_Type)
 		}
 	}
 	return true;
-}
+}//和声计算的实现
 void DeleteHarmoTrack(TRACK* &HarmoList, long HarmoNum)
 {
 	for (int i = HarmoNum; i < TRACK::HarmoNumTotal - 1; i++)
@@ -214,4 +264,4 @@ void DeleteHarmoTrack(TRACK* &HarmoList, long HarmoNum)
 	HarmoList[TRACK::HarmoNumTotal - 1].DeleteBarList();
 	HarmoList[TRACK::HarmoNumTotal - 1].DeletePassageList();
 	TRACK::HarmoNumTotal --;
-}
+}//删除和声音轨

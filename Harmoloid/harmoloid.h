@@ -9,16 +9,17 @@ using namespace std;
 
 #define DEFAULT_STR L""
 #define HARMONY_TYPE_MAX 7
-#define VALID_LENGTH_PERCENT_THRESHOLD 0.25
-#define MAXPROB_VALID_THRESHOLD 0.8
-#define PROB_SIMILAR_THRESHOLD 0.05
-#define UNCERTAIN_THRESHOLD 3
-
-const wstring Harmonic_Type[7] = { L"0", L"3rd", L"-3rd", L"6th", L"-6th", L"8th", L"-8th" };
-const wstring Tonality_Type[13] = { L"C", L"C#", L"D", L"Eb", L"E", L"F", L"F#", L"G", L"G#", L"A", L"Bb", L"B", L"Atonal" };
-const wstring Tonality_Type2[13] = { L"B#", L"Db", L"D", L"D#", L"Fb", L"E#", L"Gb", L"G", L"Ab", L"A", L"A#", L"Cb", L"Atonal" };
-const long thirdup_keyshift[12] = { 4, 3, 5, 4, 3, 4, 3, 5, 4, 3, 4, 3 }; 
-const long thirddown_keyshift[12] = { -5, -2, -3, -3, -4, -3, -4, -3, -4, -4, -3, -4};//0~11分别代表do, do# ...
+//算法使用的常数值及数组
+#define VALID_LENGTH_PERCENT_THRESHOLD 0.25 //判定小节为有效的音符时长占总时长比例的阈值
+#define MAXPROB_VALID_THRESHOLD 0.1 //判定概率最大的调性有效的概率阈值
+#define PROB_SIMILAR_THRESHOLD 0.03 //判定几个调性的概率相近的概率差阈值
+#define UNCERTAIN_THRESHOLD 3 //判定分析结果是否有效的不确定度阈值
+#define ADAPTING_THRESHOLD 0.5 //判定小节是否适配乐段的概率阈值
+const wstring Harmonic_Type[7] = { L"0", L"3rd", L"-3rd", L"6th", L"-6th", L"8th", L"-8th" };//和声类型的long型和字符串型表示的转换
+const wstring Tonality_Type[13] = { L"C", L"C#", L"D", L"Eb", L"E", L"F", L"F#", L"G", L"G#", L"A", L"Bb", L"B", L"Atonal" };//调号或音名的long型和字符串型表示的转换
+const wstring Tonality_Type2[13] = { L"B#", L"Db", L"D", L"D#", L"Fb", L"E#", L"Gb", L"G", L"Ab", L"A", L"A#", L"Cb", L"Atonal" };//调号或音名的long型和字符串型表示的转换
+const long thirdup_keyshift[12] = { 4, 3, 5, 4, 3, 4, 3, 5, 4, 3, 4, 3 }; //上三度和声的计算参数
+const long thirddown_keyshift[12] = { -5, -2, -3, -3, -4, -3, -4, -3, -4, -4, -3, -4 };//下三度和声的计算参数，0~11分别代表do, do# ...
 const double Tonality_KeyName_Prob[12][12] = 
 { 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 
   1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0,
@@ -32,25 +33,36 @@ const double Tonality_KeyName_Prob[12][12] =
   0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1,
   1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0,
   0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1,
-};
+};//调性内音名有效与否的判定
 class PASSAGE;
 class TRACK;
 
+//类定义
 class NOTE
 {
 private:
+	long NoteNum;
 	long NoteKey;
 	long NoteTimeOn;
 	long NoteTimeOff;
+	bool NoteValidity;
 public:
+	NOTE()
+	{
+		NoteValidity = true;
+	}
+	long GetNoteNum();
 	long GetNoteKey();
 	wstring GetNoteKeyAsString();
 	long GetNoteTimeOn();
 	long GetNoteTimeOff();
 	long GetNoteLength();
+	bool NoteIsValid();
+	void SetNoteNum(long nNoteNum);
 	void SetNoteKey(long nNoteKey);
 	void SetNoteTimeOn(long nNoteTimeOn);
 	void SetNoteTimeOff(long nNoteTimeOff);
+	void DeleteNote();
 };
 class BAR
 {
@@ -76,7 +88,7 @@ public:
 	long GetValidLength();
 	void SetValidity(bool nValidity);
 	void SetEmptiness(bool nEmptiness);
-	void AdaptWithPassage(PASSAGE nPassage);
+	bool AdaptWithPassage(PASSAGE nPassage);
 	void PrintBar();
 };
 class PASSAGE
@@ -90,6 +102,7 @@ public:
 	long FirstBarNum;
 	long LastBarNum;
 	long GetPassageNum();
+	long GetTonalityOption(long Tonality);
 	long GetTonality();
 	long GetFirstNoteNum();
 	long GetLastNoteNum();
@@ -115,14 +128,10 @@ private:
 	long ParentTrackNum;
 	wstring HarmonicType;
 	bool IsTonalized;
+	bool IsSaved;
 public:
 	TRACK();
-	~TRACK()
-	{
-		void DeleteNoteList();
-		void DeleteBarList();
-		void DeletePassageList();
-	}
+	~TRACK();
 	static long TrackNumTotal;
 	static long HarmoNumTotal;
 	NOTE *NoteList;
@@ -140,6 +149,7 @@ public:
 	long GetParentTrackNum();
 	wstring GetHarmonicType();
 	bool TrackIsTonalized();
+	bool TrackIsSaved();
 	void SetTrackNum(long nTrackNum);
 	void SetTrackName(wstring nTrackName);
 	void CreateNoteList(long NoteNumMax);
@@ -153,14 +163,17 @@ public:
 	void SetParentTrackNum(long nParentTrackNum);
 	void SetHarmonicType(long nHarmonicType);
 	void SetIsTonalized(bool nIsTonalized);
+	void SetIsSaved(bool nIsSaved);
 	void CombinePassages();
-	bool CombinePassagesForAuto(long PassageNumber1, long PassageNumber2, bool IsSurelyTonalized);
+	void PreCombinePassages();
 	bool ShiftKey(long Harmonic_Type);
 	void DeleteNoteList();
 	void DeleteBarList();
 	void DeletePassageList();
 	void DeletePassageFromPassageList(long PassageNum);
 };
+
+//其他函数定义
 bool StrIsDigit(wstring str);
 long ConvertTonalityType(wstring TonalityType);
 long SortArrayByGreatness( double data[], long greatness );
@@ -176,6 +189,8 @@ void Tonalization_PrintTrackList( TRACK* TrackList );
 bool AutoTonalize( TRACK* Track );
 bool ManuTonalize( TRACK* Track );
 void PrintHelpforAutoTonalization1();
+void PrintHelpforAutoTonalization2();
+void PrintHelpforAutoTonalization3();
 void PrintHelpforManuTonalization();
 void Harmonization( TRACK* &TrackList, TRACK* &HarmoList );
 void Harmonization_PrintTrackList( TRACK* TrackList );
