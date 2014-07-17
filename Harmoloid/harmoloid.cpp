@@ -29,7 +29,7 @@ void main()
 	wstring MainCommand = DEFAULT_STR;
 
 	//打印程序信息
-	wcout<<"HARMOLOID Beta 0.2"<<endl<<"sdercolin (C) 2014"<<endl<<endl;
+	wcout<<"HARMOLOID Beta 0.3"<<endl<<"sdercolin (C) 2014"<<endl<<endl;
 	//主程序界面循环
 	while ( true )
 	{

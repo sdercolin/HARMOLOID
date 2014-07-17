@@ -981,7 +981,7 @@ void PASSAGE::CalculateTonalityOptions()
 		{
 			prob += NoteNameProb[j] * Tonality_KeyName_Prob[i][j];
 		}
-		Tonality_Prob[i] = prob * NoteNameProb[i];
+		Tonality_Prob[i] = prob;
 	}
 	long ProbMaxNum = SortArrayByGreatness(Tonality_Prob, 1);
 	for (int i = 0; i < 12; i++)
