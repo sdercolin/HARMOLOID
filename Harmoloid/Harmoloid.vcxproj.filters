@@ -21,6 +21,12 @@
     <ClInclude Include="harmoloid.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="tinystr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="MIDIData.lib">
@@ -38,6 +44,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Harmonization.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="tinystr.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlerror.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlparser.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

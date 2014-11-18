@@ -836,7 +836,7 @@ void PrintHelpforAutoTonalization2()
 	wcout<<"* When you are asked to enter a Tonality, please enter as \"C\",\"Eb\",\"F#\" etc."<<endl;
 	wcout<<"  - You can also enter \"Atonal\" to set this Passage as an invalid one. It will not be Harmolized."<<endl;
 	wcout<<"  - HARMOLOID is only applicable to MAJOR scales at present."<<endl;
-	wcout<<"* Due to differences between MIDI editors, you can enter \"?x\" to check the content of Bar x."<<endl;
+	wcout<<"* Due to differences between editors, you can enter \"?x\" to check the content of Bar x."<<endl;
 	wcout<<"* You can also enter \"help\" to read this guide again."<<endl;
 	wcout<<"* To quit Tonalization, you can enter \"Q\"."<<endl<<endl;
 	return;
@@ -849,7 +849,7 @@ void PrintHelpforAutoTonalization3()
 	wcout<<"  Please follow the instructions to set passages of this track."<<endl;
 	wcout<<"  - HARMOLOID will give a tonalization result for each passage you set."<<endl;
 	wcout<<"  - If the tonality is not clear, you may be asked to enter the tonality by yourself."<<endl;
-	wcout<<"* Due to differences between MIDI editors, you can enter \"?x\" to check the content of Bar x."<<endl;
+	wcout<<"* Due to differences between editors, you can enter \"?x\" to check the content of Bar x."<<endl;
 	wcout<<"* You can also enter \"help\" to read this guide again."<<endl;
 	wcout<<"* When you are asked to enter a Bar number, please enter a positive integer."<<endl;
 	wcout<<"  - When you enter a Bar number that is larger than the number of last Bar, it is taken as the last one."<<endl;
@@ -866,7 +866,7 @@ void PrintHelpforManuTonalization()
 	wcout<<"* Manual Mode is chosen."<<endl;
 	wcout<<endl<<"* HARMOLOID uses \"Passage\" to divide a track into parts with different tonalities."<<endl;
 	wcout<<"  Please follow the instructions to set passages of this track."<<endl;
-	wcout<<"* Due to differences between MIDI editors, you can enter \"?x\" to check the content of Bar x."<<endl;
+	wcout<<"* Due to differences between editors, you can enter \"?x\" to check the content of Bar x."<<endl;
 	wcout<<"* You can also enter \"help\" to read this guide again."<<endl;
 	wcout<<"* When you are asked to enter a Bar number, please enter a positive integer."<<endl;
 	wcout<<"  - When you enter a Bar number that is larger than the number of last Bar, it is taken as the last one."<<endl;

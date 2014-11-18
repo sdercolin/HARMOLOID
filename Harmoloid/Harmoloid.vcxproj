@@ -85,6 +85,8 @@
   <ItemGroup>
     <ClInclude Include="harmoloid.h" />
     <ClInclude Include="MIDIData.h" />
+    <ClInclude Include="tinystr.h" />
+    <ClInclude Include="tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="MIDIData.lib" />
@@ -93,6 +95,10 @@
     <ClCompile Include="classes.cpp" />
     <ClCompile Include="harmoloid.cpp" />
     <ClCompile Include="Harmonization.cpp" />
+    <ClCompile Include="tinystr.cpp" />
+    <ClCompile Include="tinyxml.cpp" />
+    <ClCompile Include="tinyxmlerror.cpp" />
+    <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="Tonalization.cpp" />
   </ItemGroup>
   <ItemGroup>

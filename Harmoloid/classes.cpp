@@ -20,7 +20,7 @@ long NOTE::GetNoteKey()
 }
 wstring NOTE::GetNoteKeyAsString()
 {
-	return Tonality_Type[static_cast <int>(NoteKey%12)] + to_wstring(NoteKey/12);
+	return Tonality_Type[static_cast <int>(NoteKey%12)] + to_wstring(NoteKey/12 - 1);
 }
 long NOTE::GetNoteTimeOn()
 {

@@ -5,10 +5,12 @@
 #include "MIDIdata.h"
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 #define DEFAULT_STR L""
 #define HARMONY_TYPE_MAX 7
+#define UST_BAR_TIME 1920
 //算法使用的常数值及数组
 #define VALID_LENGTH_PERCENT_THRESHOLD 0.25 //判定小节为有效的音符时长占总时长比例的阈值
 #define MAXPROB_VALID_THRESHOLD 0.1 //判定概率最大的调性有效的概率阈值
@@ -51,6 +53,7 @@ public:
 	{
 		NoteValidity = true;
 	}
+	string NoteID;
 	long GetNoteNum();
 	long GetNoteKey();
 	wstring GetNoteKeyAsString();
@@ -177,13 +180,23 @@ public:
 bool StrIsDigit(wstring str);
 long ConvertTonalityType(wstring TonalityType);
 long SortArrayByGreatness( double data[], long greatness );
+wstring StringToWString(string &str);
+string WStringToString(wstring &wstr);
+bool UTF8ToUnicode(vector<wchar_t>& pun, const char* pu8, int utf8Len);
+bool UnicodeToUTF8(vector<char>& pu8, const wchar_t* pun, int uLen);
 
 wstring ReceiveMainCommand( bool* pIsLoaded, bool* pIsTonalized, wstring* pFilePath, TRACK* TrackList, TRACK* HarmoList );
 void PrintTrackList( TRACK* TrackList, TRACK* HarmoList );
 void LoadMIDI( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* pFilePath, MIDIData* &pMIDIData, MIDITrack* &pMIDITrack, MIDITrack* &npMIDITrack, MIDIEvent* &pMIDIEvent, MIDIEvent* &npMIDIEvent );
 void Renew( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* pFilePath, MIDIData* &pMIDIData, MIDITrack* &pMIDITrack, MIDITrack* &npMIDITrack, MIDIEvent* &pMIDIEvent, MIDIEvent* &npMIDIEvent, bool* pIsTonalized );
+void LoadUST( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* pFilePath );
+void LoadVSQX( TRACK* &TrackList, TRACK* &HarmoList, bool* pIsLoaded, wstring* pFilePath );
 void SaveMIDI( TRACK* &TrackList, TRACK* &HarmoList, wstring FilePath, MIDIData* &pMIDIData, MIDITrack* &pMIDITrack, MIDITrack* &npMIDITrack, MIDIEvent* &pMIDIEvent, MIDIEvent* &npMIDIEvent );
+void SaveUST( TRACK* &TrackList, TRACK* &HarmoList, wstring FilePath );
+void SaveVSQX( TRACK* &TrackList, TRACK* &HarmoList, wstring FilePath );
 void SaveAsMIDI( TRACK* &TrackList, TRACK* &HarmoList, MIDIData* &pMIDIData, MIDITrack* &pMIDITrack, MIDITrack* &npMIDITrack, MIDIEvent* &pMIDIEvent, MIDIEvent* &npMIDIEvent );
+void SaveAsUST( TRACK* &TrackList, TRACK* &HarmoList, wstring FilePath );
+void SaveAsVSQX( TRACK* &TrackList, TRACK* &HarmoList, wstring FilePath );
 void Tonalization( TRACK* &TrackList, bool* pIsTonalized );
 void Tonalization_PrintTrackList( TRACK* TrackList );
 bool AutoTonalize( TRACK* Track );
