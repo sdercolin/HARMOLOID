@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Guide</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<p><img src="http://sdercolin.com/akatsuki/wp-content/uploads/sites/2/2014/12/HARMOLOID.png" /></p>
+<h1>用户手册 ver 1.0</h1>
+<p>　</p>
+<h2>概述</h2>
+<p>HARMOLOID是一款免费的制作简单和声的工具，主要面向VOCALOID、UTAU等音声合成软件的用户。</p>
+<p>由于和声的编写是具有创作性的，本程序只能在有限的范围内给出几种较为普适的和声编写对策。因此，<strong>如果您具备自己编写和声的能力，您完全不需要使用本程序。</strong></p>
+<p>本程序基于调性计算和声。由于程序读取的只有人声旋律音轨，因此不能十分准确地给出正确的和弦内音。<strong>如果您拥有一定的乐理知识，请在运行本程序后自行对和声进行修改和调整。</strong></p>
+<p>　</p>
+<h2>使用流程</h2>
+<ol>
+<li>载入文件：菜单栏——文件——载入。目前HARMOLOID支持的格式包括VOCALOID3/4工程文件(.vsqx)及UTAU工程文件(.ust)。</li>
+<li>调性标记：单击选择左侧音轨列表中的某个音轨，再按下右侧的“调性标记”按钮，进行调性的标记。</li>
+<li>和声生成：选择已经完成调性标记的音轨，再按下右侧的“和声生成”按钮。</li>
+<li>保存/另存为：菜单栏——文件——保存/另存为。需要注意的是，若您使用的是UTAU模式，则为了保护原文件的安全，您不能使用“保存”指令。</li>
+</ol>
+<p>　</p>
+<h2>关于调性标记</h2>
+<p>&quot;关于“乐段”：由于制作和声的需要，HARMOLOID将会把音轨划分成一个或多个“乐段”，每个乐段内部的乐句需要满足单一调性，即不出现转调。</p>
+<ul>
+<li>若您能够自己确定转调的位置和各部分的调性，请手动设置乐段，这样可以最大程度上地避免误差。</li>
+<li>若您能够确定转调的位置，而不能确定各部分的调性，则请手动设置乐段的划分，并将调性选项置于“待分析”，然后按下“自动计算调性（按照乐段划分）”按钮。</li>
+<li>若您对乐理完全不了解，且无法确定是否存在转调，请直接按下“自动计算调性（全自动/慎用）”按钮，但是这个功能将可能带来较大的误差，请在后续制作中进行较仔细的调整。</li>
+</ul>
+<p>上述的三种方法的准确度依次降低，请根据实际情况挑选。</p>
+<p>由于不同编辑器的小节显示和音高标识的差异，请以本界面右边的小节列表中的内容为准。</p>
+<p>　</p>
+<h2>关于和声生成</h2>
+<ul>
+<li>HARMOLOID目前只支持简单的零度和声、上下三度和声、上下六度和声和上下八度和声的计算。</li>
+<li>其中上下三度和上下六度和声的计算策略经过相应的调整。</li>
+<li>调外音被视作相邻的调内音处理。</li>
+</ul>
+<p>　</p>
+<h2>常见问题</h2>
+<p><strong>Q：为什么我运行不了程序？</strong>
+A：若程序无法运行，请下载安装Microsoft .NET Framework 2.0或以上版本：<a href="http://www.microsoft.com/zh-cn/download/details.aspx?id=1639">http://www.microsoft.com/zh-cn/download/details.aspx?id=1639</a>。若该版本无法安装，请自行在Microsoft官方网站上寻找适合您当前操作系统的.NET版本。</p>
+<p><strong>Q：和声不是需要人来配的吗？这个程序能配出正确的和声吗？</strong>
+A：和声的编写确实需要创造性，本程序只能给出较为普适的和声。视用户所使用的模式和歌曲的不同，也有可能出现一些错误，因此请您对生成结果进行试听并做出相应调整。</p>
+<p><strong>Q：这个软件可以给人声配和声吗？</strong>
+A：本程序主要面向VOCALOID、UTAU等音声合成软件的用户，不能对人声或其他旋律音轨(.wav)进行分析。您可以利用其它软件将其转化为MIDI文件，再通过VOCALOID或UTAU生成工程文件，经过本程序的处理后，在VOCALOID/UTAU中发声。</p>
+<p><strong>Q：我对乐理完全没有了解，可以使用这个软件吗？</strong>
+A：本程序基本上面向对乐理不是很了解的用户，因此您可以使用。根据您对歌曲的了解情况不同，您可以选择不同程度自动化的模式，具体请参见本手册内记载的使用流程。</p>
+<p><strong>Q：为什么我无法读取文件？</strong>
+A：请确保您所读取的文件是VOCALOID3/4或者UTAU能够识别的格式。</p>
+<p><strong>Q：我不懂乐理，但是全自动调性分析出来的结果很乱，怎么办？</strong>
+A：当全自动调性分析的结果十分复杂时，请尽量使用其他方法。较为推荐的方法是，将歌曲按照自然段落分段，然后使用“自动调性分析（按乐段划分）”功能。</p>
+<p><strong>Q：最后制作出的和声非常不和谐，怎么办？</strong>
+A：若全部或者大部分音符都不和谐，则很有可能是调性标记出现错误，请重新确认一下该步骤。若有少量音符不和谐，可能是该处出现了短暂性离调等，请自行微调。</p>
+<p><strong>Q：程序里面的某个小节和我在其他软件里看到的内容不同，这是为什么？</strong>
+A：这是因为不同的软件标记小节号的方式及音名的记法都不同，并且在不同软件间导入/导出时也会对此类信息进行修改。因此请以调性标记界面右边的小节列表中的内容为准。</p>
+<p><strong>Q：使用了本程序制作的歌曲在投稿信息中需要写什么吗？</strong>
+A：无论您使用本程序进行什么类型的音乐制作，都不需要标记出本程序或者本程序的作者。当然，如果看到这类标记，我们将非常欣慰。</p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
