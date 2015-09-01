@@ -45,7 +45,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(609, 105);
             this.label1.TabIndex = 30;
-            this.label1.Text = "HARMOLOID 1.1\r\nsdercolin.com/akatsuki/harmoloid\r\n\r\nlogo绘制：断面\r\n科林/sdercolin © 2015" +
+            this.label1.Text = "HARMOLOID 1.0\r\nsdercolin.com/akatsuki/harmoloid\r\n\r\nlogo绘制：断面\r\n科林/sdercolin © 2015" +
     " All Rights Reserved.";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 

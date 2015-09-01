@@ -237,7 +237,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(259, 20);
             this.label4.TabIndex = 12;
-            this.label4.Text = "ver 1.1          科林/sdercolin © 2015";
+            this.label4.Text = "ver 1.0          科林/sdercolin © 2015";
             // 
             // logo
             // 
@@ -273,7 +273,7 @@
             this.MaximizeBox = false;
             this.Name = "HARMOLOID";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "HARMOLOID 1.1";
+            this.Text = "HARMOLOID 1.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HARMOLOID_FormClosing);
             this.Load += new System.EventHandler(this.c_Load);
             this.menuStrip1.ResumeLayout(false);

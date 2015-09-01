@@ -97,7 +97,6 @@
     </Compile>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="HARMOLOID.resx">
       <DependentUpon>HARMOLOID.cs</DependentUpon>
@@ -105,7 +104,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Harmonization.resx">
       <DependentUpon>Harmonization.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -123,7 +121,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="USTSaving.resx">
       <DependentUpon>USTSaving.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

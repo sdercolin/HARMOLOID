@@ -17,7 +17,7 @@ namespace HARMOLOID_Csharp
         public string ProjectName;
         public string FileName; //文件名
         public string FilePath; //绝对路径
-        public int FileFormat = 0; //1 for vsqx3, 2 for vsqx4, 3 for ust, 4 for ccs
+        public int FileFormat = 0; //1 for vsqx3, 2 for vsqx4, 3 for ust
         public int TrackNumTotal = 0;
         public int HarmoNumTotal = 0;
         public TRACK[] TrackList;
@@ -40,10 +40,6 @@ namespace HARMOLOID_Csharp
             else if (FileName.Remove(0, FileName.Length - 4) == ".ust")
             {
                 FileFormat = 3;
-            }
-            else if (FileName.Remove(0, FileName.Length - 4) == ".ccs")
-            {
-                FileFormat = 4;
             }
             //按照格式对应载入
             switch (FileFormat)
@@ -594,265 +590,6 @@ namespace HARMOLOID_Csharp
                         MessageBox.Show("载入成功。", "载入");
                         break;
                     }
-                case 4: // load ccs for CeVIO
-                    {
-                        int TrackNum = 0;
-                        XmlDocument ccs = new XmlDocument();
-                        ccs.Load(FilePath);
-                        //建立音轨列表
-                        XmlNode root = ccs.FirstChild.NextSibling;
-                        XmlNode sequence = null;
-                        XmlNode scene = null;
-                        XmlNode groups = null;
-                        XmlNode units = null;
-                        if (root.HasChildNodes)
-                        {
-                            for (int i = 0; i < root.ChildNodes.Count; i++)
-                            {
-                                if (root.ChildNodes[i].Name == "Sequence")
-                                {
-                                    sequence = root.ChildNodes[i];
-                                    break;
-                                }
-                            }
-                        }
-                        if (sequence.HasChildNodes)
-                        {
-                            for (int i = 0; i < sequence.ChildNodes.Count; i++)
-                            {
-                                if (sequence.ChildNodes[i].Name == "Scene")
-                                {
-                                    scene = sequence.ChildNodes[i];
-                                    break;
-                                }
-                            }
-                        }
-                        if (scene.HasChildNodes)
-                        {
-                            for (int i = 0; i < scene.ChildNodes.Count; i++)
-                            {
-                                if (scene.ChildNodes[i].Name == "Groups")
-                                {
-                                    groups = scene.ChildNodes[i];
-                                    break;
-                                }
-                            }
-                        }
-                        if (groups.HasChildNodes)
-                        {
-                            int count = 0;
-                            for (int i = 0; i < groups.ChildNodes.Count; i++)
-                            {
-                                if (groups.ChildNodes[i].Name == "Group")
-                                {
-                                    count++;
-                                }
-                            }
-                            TrackList = new TRACK[count];
-                            HarmoList = new HARMOTRACK[count * 7];
-                        }
-                        if (scene.HasChildNodes)
-                        {
-                            for (int i = 0; i < scene.ChildNodes.Count; i++)
-                            {
-                                if (scene.ChildNodes[i].Name == "Units")
-                                {
-                                    units = scene.ChildNodes[i];
-                                    break;
-                                }
-                            }
-                        }
-                        if (groups.HasChildNodes)
-                        {
-                            for (int i = 0; i < groups.ChildNodes.Count; i++)
-                            {
-                                if (groups.ChildNodes[i].Name == "Group")
-                                {
-                                    XmlElement group = (XmlElement)groups.ChildNodes[i];
-                                    XmlElement unit = null;
-                                    TrackList[TrackNum] = new TRACK();
-                                    TrackList[TrackNum].TrackNum = TrackNum;
-                                    TrackList[TrackNum].TrackName = group.GetAttribute("Name");
-                                    for (int k = 0; k < 7; k++)
-                                    {
-                                        TrackList[TrackNum].ChildHarmoTrackNum[k] = -1;
-                                    }
-                                    TrackList[TrackNum].IsTonalized = false;
-                                    TrackList[TrackNum].TrackIDforCeVIO = group.GetAttribute("Id");
-                                    if (group.GetAttribute("Category") != "SingerSong")
-                                    {
-                                        TrackList[TrackNum].TrackEmptiness = true;
-                                    }
-                                    else
-                                    {
-                                        if (units.HasChildNodes)
-                                        {
-                                            for (int j = 0; j < units.ChildNodes.Count; j++)
-                                            {
-                                                if (units.ChildNodes[j].Name == "Unit")
-                                                {
-                                                    if (((XmlElement)units.ChildNodes[j]).GetAttribute("Group") == TrackList[TrackNum].TrackIDforCeVIO)
-                                                    {
-                                                        unit = (XmlElement)units.ChildNodes[j];
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        int NoteNum = 0;
-                                        //建立每个音轨的音符列表，读取音符信息
-                                        int NoteCount = 0;
-                                        XmlElement score = null;
-                                        XmlNode song = null;
-                                        for (int j = 0; j < unit.ChildNodes.Count; j++)
-                                        {
-                                            if (unit.ChildNodes[j].Name == "Song")
-                                            {
-                                                song = unit.ChildNodes[j];
-                                                for (int k = 0; k < song.ChildNodes.Count; k++)
-                                                {
-                                                    if (song.ChildNodes[k].Name == "Score")
-                                                    {
-                                                        score = (XmlElement)song.ChildNodes[k];
-                                                        break;
-                                                    }
-                                                }
-                                                for (int k = 0; k < score.ChildNodes.Count; k++)
-                                                {
-                                                    if (score.ChildNodes[k].Name == "Note")
-                                                    {
-                                                        NoteCount++;
-                                                    }
-                                                }
-                                                break;
-                                            }
-                                        }
-                                        TrackList[TrackNum].NoteList = new NOTE[NoteCount];
-                                        for (int k = 0; k < score.ChildNodes.Count; k++)
-                                        {
-                                            if (score.ChildNodes[k].Name == "Note")
-                                            {
-                                                XmlElement note = (XmlElement)score.ChildNodes[k];
-                                                TrackList[TrackNum].NoteList[NoteNum] = new NOTE();
-                                                TrackList[TrackNum].NoteList[NoteNum].NoteNum = NoteNum;
-                                                TrackList[TrackNum].NoteList[NoteNum].NoteTimeOn = Convert.ToInt32(note.GetAttribute("Clock"));
-                                                TrackList[TrackNum].NoteList[NoteNum].NoteTimeOff = TrackList[TrackNum].NoteList[NoteNum].NoteTimeOn + Convert.ToInt32(note.GetAttribute("Duration"));
-                                                TrackList[TrackNum].NoteList[NoteNum].NoteKey = Convert.ToInt32(note.GetAttribute("PitchStep")) + (Convert.ToInt32(note.GetAttribute("PitchOctave")) + 1) * 12;
-                                                NoteNum++;
-                                            }
-                                        }
-                                        TrackList[TrackNum].NoteNumTotal = NoteNum;
-                                        //建立小节列表，读取小节信息
-                                        TrackList[TrackNum].BarList = new BAR[1000];
-                                        if (NoteNum == 0)
-                                        {
-                                            TrackList[TrackNum].TrackEmptiness = true;
-                                        }
-                                        else
-                                        {
-                                            TrackList[TrackNum].TrackEmptiness = false;
-                                            int resolution = 480;
-                                            XmlNode beat = null;
-                                            XmlElement TimeSig = null;
-                                            int pos_timgSig = 0;
-                                            int nume = 4;
-                                            int denomi = 4;
-                                            int BarTime = 0;
-                                            for (int k = 0; k < song.ChildNodes.Count; k++)
-                                            {
-                                                if (song.ChildNodes[k].Name == "Beat")
-                                                {
-                                                    beat = (XmlElement)song.ChildNodes[k];
-                                                    for (int l = 0; l < beat.ChildNodes.Count; l++)
-                                                    {
-                                                        if (beat.ChildNodes[l].Name == "Time")
-                                                        {
-                                                            TimeSig = (XmlElement)beat.ChildNodes[l];
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            for (int BarNum = 0, j = 0; j < TrackList[TrackNum].NoteNumTotal; BarNum++)
-                                            {
-                                                TrackList[TrackNum].BarList[BarNum] = new BAR();
-                                                TrackList[TrackNum].BarList[BarNum].BarNum = BarNum;
-                                                pos_timgSig = Convert.ToInt32(TimeSig.GetAttribute("Clock"));
-                                                nume = Convert.ToInt32(TimeSig.GetAttribute("Beats"));
-                                                denomi = Convert.ToInt32(TimeSig.GetAttribute("BeatType"));
-                                                if (pos_timgSig / resolution == BarNum)
-                                                {
-                                                    BarTime = nume * 4 * resolution / denomi;
-                                                    XmlElement nTimeSig = (XmlElement)TimeSig.NextSibling;
-                                                    while (nTimeSig != null && nTimeSig.Name != "Time")
-                                                    {
-                                                        nTimeSig = (XmlElement)TimeSig.NextSibling;
-                                                    }
-                                                    if (nTimeSig != null)
-                                                    {
-                                                        TimeSig = nTimeSig;
-                                                    }
-                                                }
-                                                if (BarNum == 0)
-                                                {
-                                                    TrackList[TrackNum].BarList[BarNum].BarTimeOn = 0;
-                                                }
-                                                else
-                                                {
-                                                    TrackList[TrackNum].BarList[BarNum].BarTimeOn = TrackList[TrackNum].BarList[BarNum - 1].BarTimeOff;
-                                                }
-                                                TrackList[TrackNum].BarList[BarNum].BarTimeOff = TrackList[TrackNum].BarList[BarNum].BarTimeOn + BarTime;
-                                                TrackList[TrackNum].BarList[BarNum].ParentTrackNum = TrackNum;
-                                                if (TrackList[TrackNum].NoteList[j].NoteTimeOn >= TrackList[TrackNum].BarList[BarNum].BarTimeOff)
-                                                {
-                                                    TrackList[TrackNum].BarList[BarNum].BarEmptiness = true;
-                                                }
-                                                else
-                                                {
-                                                    TrackList[TrackNum].BarList[BarNum].BarEmptiness = false;
-                                                    TrackList[TrackNum].BarList[BarNum].FirstNoteNum = j;
-                                                    j++;
-                                                }
-                                                while (j <= TrackList[TrackNum].NoteNumTotal - 1 && TrackList[TrackNum].NoteList[j].NoteTimeOn < TrackList[TrackNum].BarList[BarNum].BarTimeOff)
-                                                {
-                                                    j++;
-                                                }
-                                                if (!TrackList[TrackNum].BarList[BarNum].BarEmptiness)
-                                                {
-                                                    TrackList[TrackNum].BarList[BarNum].LastNoteNum = j - 1;
-                                                }
-                                                if (TrackList[TrackNum].BarList[BarNum].BarEmptiness)
-                                                {
-                                                    TrackList[TrackNum].BarList[BarNum].BarValidity = false;
-                                                }
-                                                else if (Convert.ToDouble(TrackList[TrackNum].BarList[BarNum].GetValidLength(TrackList[TrackNum])) / Convert.ToDouble(TrackList[TrackNum].BarList[BarNum].GetBarLength()) < Constants.VALID_LENGTH_PERCENT_THRESHOLD)
-                                                {
-                                                    TrackList[TrackNum].BarList[BarNum].BarValidity = false;
-                                                }
-                                                else
-                                                {
-                                                    TrackList[TrackNum].BarList[BarNum].BarValidity = true;
-                                                }
-                                                TrackList[TrackNum].BarNumTotal++;
-                                            }
-                                            TrackList[TrackNum].PassageList = new PASSAGE[1];
-                                            TrackList[TrackNum].PassageList[0] = new PASSAGE();
-                                            TrackList[TrackNum].PassageList[0].PassageNum = 0;
-                                            TrackList[TrackNum].PassageList[0].ParentTrackNum = TrackNum;
-                                            TrackList[TrackNum].PassageList[0].FirstBarNum = 0;
-                                            TrackList[TrackNum].PassageList[0].LastBarNum = TrackList[TrackNum].BarNumTotal - 1;
-                                            TrackList[TrackNum].PassageList[0].Tonality = 13;
-                                            TrackList[TrackNum].PassageNumTotal = 1;
-                                        }
-                                    }
-                                    TrackNum++;
-                                    TrackNumTotal = TrackNum;
-                                }
-                            }
-                        }
-                        MessageBox.Show("载入成功。", "载入");
-                        break;
-                    }
                 default:
                     {
                         MessageBox.Show("格式错误或文件损坏，无法载入文件。", "载入");
@@ -1099,175 +836,6 @@ namespace HARMOLOID_Csharp
                             File.Copy(FilePath, FilePath + ".bak", true);
                             vsqx.Save(SavingPath);
                             vsqx.Save(FilePath.Remove(this.FilePath.Length - 5, 5) + ".temp");
-                        }
-                        catch
-                        {
-                            MessageBox.Show("保存失败。", "保存");
-                            File.Copy(FilePath + ".bak", FilePath, true);
-                            break;
-                        }
-                        File.Delete(FilePath + ".bak");
-                        for (int i = 0; i < HarmoNumTotal; i++)
-                        {
-                            HarmoList[i].IsSaved = true;
-                        }
-                        MessageBox.Show("保存成功。", "保存");
-                        break;
-                    }
-                case 4: // save ccs
-                    {
-                        XmlDocument ccs = new XmlDocument();
-                        ccs.Load(FilePath.Remove(this.FilePath.Length - 5, 5) + ".temp");
-                        for (int HarmoNum = 0; HarmoNum < HarmoNumTotal; HarmoNum++)
-                        {
-                            if (!HarmoList[HarmoNum].IsSaved)
-                            {
-                                XmlNode root = ccs.FirstChild.NextSibling;
-                                XmlNode unit = null;
-                                XmlNode group = null;
-                                //定位各节点
-                                XmlNode sequence = null;
-                                XmlNode scene = null;
-                                XmlNode groups = null;
-                                XmlNode units = null;
-                                if (root.HasChildNodes)
-                                {
-                                    for (int i = 0; i < root.ChildNodes.Count; i++)
-                                    {
-                                        if (root.ChildNodes[i].Name == "Sequence")
-                                        {
-                                            sequence = root.ChildNodes[i];
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (sequence.HasChildNodes)
-                                {
-                                    for (int i = 0; i < sequence.ChildNodes.Count; i++)
-                                    {
-                                        if (sequence.ChildNodes[i].Name == "Scene")
-                                        {
-                                            scene = sequence.ChildNodes[i];
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (scene.HasChildNodes)
-                                {
-                                    for (int i = 0; i < scene.ChildNodes.Count; i++)
-                                    {
-                                        if (scene.ChildNodes[i].Name == "Groups")
-                                        {
-                                            groups = scene.ChildNodes[i];
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (scene.HasChildNodes)
-                                {
-                                    for (int i = 0; i < scene.ChildNodes.Count; i++)
-                                    {
-                                        if (scene.ChildNodes[i].Name == "Units")
-                                        {
-                                            units = scene.ChildNodes[i];
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (units.HasChildNodes)
-                                {
-                                    for (int i = 0; i < units.ChildNodes.Count; i++)
-                                    {
-                                        if (units.ChildNodes[i].Name == "Unit")
-                                        {
-                                            if (((XmlElement)units.ChildNodes[i]).GetAttribute("Group") == HarmoList[HarmoNum].TrackIDforCeVIO)
-                                            {
-                                                unit = (XmlElement)units.ChildNodes[i];
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                                if (groups.HasChildNodes)
-                                {
-                                    for (int i = 0; i < groups.ChildNodes.Count; i++)
-                                    {
-                                        if (groups.ChildNodes[i].Name == "Group")
-                                        {
-                                            if (((XmlElement)groups.ChildNodes[i]).GetAttribute("Id") == HarmoList[HarmoNum].TrackIDforCeVIO)
-                                            {
-                                                group = (XmlElement)groups.ChildNodes[i];
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                                
-                                //拷贝节点
-                                XmlElement HarmoUnit = (XmlElement)unit.Clone();
-                                units.InsertAfter(HarmoUnit, units.LastChild);
-                                XmlElement HarmoTrack = (XmlElement)group.Clone();
-                                groups.InsertAfter(HarmoTrack, groups.LastChild);
-                                //修改节点的内容
-                                string new_id = HarmoList[HarmoNum].TrackIDforCeVIO;
-                                if (new_id[1] == '0')
-                                {
-                                    new_id = HarmoList[HarmoNum].HarmonicType.ToString() + "1" + new_id.Substring(2);
-                                }
-                                else
-                                {
-                                    new_id = HarmoList[HarmoNum].HarmonicType.ToString() + "0" + new_id.Substring(2);
-                                }
-                                int NoteNum = 0;
-                                HarmoTrack.SetAttribute("Id", new_id);
-                                HarmoTrack.SetAttribute("Name", HarmoList[HarmoNum].TrackName);
-                                HarmoUnit.SetAttribute("Group", new_id);
-                                XmlNode HarmoScore = null;
-                                if (HarmoUnit.HasChildNodes)
-                                {
-                                    for (int i = 0; i < HarmoUnit.ChildNodes.Count; i++)
-                                    {
-                                        if (HarmoUnit.ChildNodes[i].Name == "Song")
-                                        {
-                                            XmlNode HarmoSong = HarmoUnit.ChildNodes[i];
-                                            if (HarmoSong.HasChildNodes)
-                                            {
-                                                for (int j = 0; j < HarmoSong.ChildNodes.Count; j++)
-                                                {
-                                                    if (HarmoSong.ChildNodes[j].Name == "Score")
-                                                    {
-                                                        HarmoScore = HarmoSong.ChildNodes[j];
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                for (int j = 0; j < HarmoScore.ChildNodes.Count && NoteNum < HarmoList[HarmoNum].NoteNumTotal; j++)
-                                {
-                                    if (HarmoScore.ChildNodes[j].Name == "Note")
-                                    {
-                                        XmlNode note = HarmoScore.ChildNodes[j];
-                                        if (HarmoList[HarmoNum].NoteList[NoteNum].NoteValidity == false)
-                                        {
-                                            HarmoScore.RemoveChild(note);
-                                            j--;
-                                        }
-                                        else
-                                        {
-                                            ((XmlElement)note).SetAttribute("PitchStep", (HarmoList[HarmoNum].NoteList[NoteNum].NoteKey % 12).ToString());
-                                            ((XmlElement)note).SetAttribute("PitchOctave", (HarmoList[HarmoNum].NoteList[NoteNum].NoteKey / 12 - 1).ToString());
-                                        }
-                                        NoteNum++;
-                                    }
-                                }
-                            }
-                        }
-                        try
-                        {
-                            File.Copy(FilePath, FilePath + ".bak", true);
-                            ccs.Save(SavingPath);
-                            ccs.Save(FilePath.Remove(this.FilePath.Length - 5, 5) + ".temp");
                         }
                         catch
                         {
@@ -1951,7 +1519,6 @@ namespace HARMOLOID_Csharp
             }
             return tmp;
         }
-        public string TrackIDforCeVIO;
     }
     public class HARMOTRACK : TRACK
     {
@@ -1984,7 +1551,6 @@ namespace HARMOLOID_Csharp
             {
                 PassageList[i] = new PASSAGE(OriTrack.PassageList[i]);
             }
-            TrackIDforCeVIO = OriTrack.TrackIDforCeVIO;
         }
         public HARMOTRACK(int HarmoNum, TRACK ParentTrack, int ParentTrackNum, int _HarmonyType)
         {
@@ -2012,7 +1578,6 @@ namespace HARMOLOID_Csharp
                 PassageList[i] = new PASSAGE(ParentTrack.PassageList[i]);
             }
             ShiftKey();
-            TrackIDforCeVIO = ParentTrack.TrackIDforCeVIO;
         }
         public void ShiftKey()
         {
