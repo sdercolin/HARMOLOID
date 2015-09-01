@@ -1,4 +1,4 @@
-﻿简易和声编写工具 HARMOLOID 1.0
+﻿简易和声编写工具 HARMOLOID 1.1
 作者 科林/sdercolin
 
 HARMOLOID是一款免费的制作简单和声的工具，主要面向VOCALOID、UTAU等音声合成软件的用户。
@@ -7,7 +7,7 @@ HARMOLOID是一款免费的制作简单和声的工具，主要面向VOCALOID、
 	请参阅"用户手册.html"。
 
 ※运行环境
-若程序无法运行，请下载安装Microsoft .NET Framework 2.0或以上版本：http://www.microsoft.com/zh-cn/download/details.aspx?id=1639
+若程序无法运行，请下载安装Microsoft .NET Framework 2.0或包含2.0的更高版本：http://www.microsoft.com/zh-cn/download/details.aspx?id=1639。若该版本无法安装，请自行在Microsoft官方网站上寻找适合您当前操作系统的.NET版本。
 	
 ※版权
 	本程序的版权归 科林/sdercolin 所有。
@@ -42,6 +42,9 @@ HARMOLOID是一款免费的制作简单和声的工具，主要面向VOCALOID、
 	感谢Risku，水蓝，-Ryncas-等在程序测试上的协助。
 
 ※更新履历
+	· 2015.4.18 - 1.1
+		· 增加了对CeVIO工程文件(.ccs)的支持。
+		
 	· 2015.2.15 - 1.0
 		· 正式版发布。用户界面可视化完成。
 		· 整合优化了各模块的功能。

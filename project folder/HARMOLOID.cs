@@ -38,7 +38,7 @@ namespace HARMOLOID_Csharp
                 }
             }
             OpenFileDialog Load_dialog = new OpenFileDialog();
-            Load_dialog.Filter = "VOCALOID3/4工程文件(.vsqx)|*.vsqx|UTAU工程文件(.ust)|*.ust";
+            Load_dialog.Filter = "VOCALOID3/4工程文件(.vsqx)|*.vsqx|UTAU工程文件(.ust)|*.ust|CeVIO工程文件(.ccs)|*.ccs";
             Load_dialog.ShowDialog();
             if (Load_dialog.FileName != "")
             {
@@ -66,6 +66,9 @@ namespace HARMOLOID_Csharp
                             break;
                         case 3:
                             FileInfoTmp += "UTAU工程文件(ust)\r\n";
+                            break;
+                        case 4:
+                            FileInfoTmp += "CeVIO工程文件(ccs)\r\n";
                             break;
                     }
                     FileInfoTmp += "文件路径：" + data.FilePath.Remove(data.FilePath.Length - data.FileName.Length) + "\r\n";
@@ -249,6 +252,9 @@ namespace HARMOLOID_Csharp
                         break;
                     case 3:
                         Save_dialog.Filter = "UTAU工程文件|*.ust";
+                        break;
+                    case 4:
+                        Save_dialog.Filter = "CeVIO工程文件|*.ccs";
                         break;
                 }
                 Save_dialog.FilterIndex = 2;
