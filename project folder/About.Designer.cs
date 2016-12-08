@@ -45,8 +45,8 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(609, 105);
             this.label1.TabIndex = 30;
-            this.label1.Text = "HARMOLOID 1.1\r\nsdercolin.com/akatsuki/harmoloid\r\n\r\nlogo绘制：断面\r\n科林/sdercolin © 2015" +
-    " All Rights Reserved.";
+            this.label1.Text = "HARMOLOID 1.2\r\nsdercolin.com/akatsuki/harmoloid\r\n\r\nlogo绘制：断面\r\n科林/sdercolin © 2015" +
+    "-2016 All Rights Reserved.";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // logo
@@ -62,7 +62,7 @@
             // 
             // About
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(709, 300);

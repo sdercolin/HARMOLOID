@@ -116,7 +116,12 @@ namespace HARMOLOID_Csharp
             listView_PassageList.Items.CopyTo(PassageViewItems, 0);
             bool ResetNeeded = false;
             int PassageNum = comboBox_PassageNum.SelectedIndex;
-            if(PassageViewItems[PassageNum].SubItems[2].Text != textBox_EndBarNum.Text)
+            if (PassageViewItems.Length <= PassageNum)
+            {
+                MessageBox.Show("乐段编号输入错误。", this.Text);
+                return;
+            }
+                if (PassageViewItems[PassageNum].SubItems[2].Text != textBox_EndBarNum.Text)
             {
                 ResetNeeded = true;
                 PassageViewItems[PassageNum].SubItems[2].Text = textBox_EndBarNum.Text;

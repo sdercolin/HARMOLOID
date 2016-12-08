@@ -61,7 +61,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(828, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(828, 27);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -72,13 +72,13 @@
             this.保存ToolStripMenuItem,
             this.另存为ToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.文件ToolStripMenuItem.Text = "文件";
             // 
             // 载入ToolStripMenuItem
             // 
             this.载入ToolStripMenuItem.Name = "载入ToolStripMenuItem";
-            this.载入ToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
+            this.载入ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.载入ToolStripMenuItem.Text = "载入";
             this.载入ToolStripMenuItem.Click += new System.EventHandler(this.载入ToolStripMenuItem_Click);
             // 
@@ -86,7 +86,7 @@
             // 
             this.保存ToolStripMenuItem.Enabled = false;
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.保存ToolStripMenuItem.Text = "保存";
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
             // 
@@ -94,7 +94,7 @@
             // 
             this.另存为ToolStripMenuItem.Enabled = false;
             this.另存为ToolStripMenuItem.Name = "另存为ToolStripMenuItem";
-            this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
+            this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.另存为ToolStripMenuItem.Text = "另存为";
             this.另存为ToolStripMenuItem.Click += new System.EventHandler(this.另存为ToolStripMenuItem_Click);
             // 
@@ -106,34 +106,34 @@
             this.BUG提交ToolStripMenuItem,
             this.关于HARMOLOIDToolStripMenuItem});
             this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
-            this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
+            this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.帮助ToolStripMenuItem.Text = "帮助";
             // 
             // 用户手册ToolStripMenuItem
             // 
             this.用户手册ToolStripMenuItem.Name = "用户手册ToolStripMenuItem";
-            this.用户手册ToolStripMenuItem.Size = new System.Drawing.Size(203, 24);
+            this.用户手册ToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.用户手册ToolStripMenuItem.Text = "用户手册";
             this.用户手册ToolStripMenuItem.Click += new System.EventHandler(this.用户手册ToolStripMenuItem_Click);
             // 
             // 获得更新ToolStripMenuItem
             // 
             this.获得更新ToolStripMenuItem.Name = "获得更新ToolStripMenuItem";
-            this.获得更新ToolStripMenuItem.Size = new System.Drawing.Size(203, 24);
+            this.获得更新ToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.获得更新ToolStripMenuItem.Text = "获得更新";
             this.获得更新ToolStripMenuItem.Click += new System.EventHandler(this.获得更新ToolStripMenuItem_Click);
             // 
             // BUG提交ToolStripMenuItem
             // 
             this.BUG提交ToolStripMenuItem.Name = "BUG提交ToolStripMenuItem";
-            this.BUG提交ToolStripMenuItem.Size = new System.Drawing.Size(203, 24);
+            this.BUG提交ToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.BUG提交ToolStripMenuItem.Text = "BUG提交";
             this.BUG提交ToolStripMenuItem.Click += new System.EventHandler(this.BUG提交ToolStripMenuItem_Click);
             // 
             // 关于HARMOLOIDToolStripMenuItem
             // 
             this.关于HARMOLOIDToolStripMenuItem.Name = "关于HARMOLOIDToolStripMenuItem";
-            this.关于HARMOLOIDToolStripMenuItem.Size = new System.Drawing.Size(203, 24);
+            this.关于HARMOLOIDToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.关于HARMOLOIDToolStripMenuItem.Text = "关于HARMOLOID";
             this.关于HARMOLOIDToolStripMenuItem.Click += new System.EventHandler(this.关于HARMOLOIDToolStripMenuItem_Click);
             // 
@@ -143,7 +143,7 @@
             this.label1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(317, 59);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 20);
+            this.label1.Size = new System.Drawing.Size(56, 17);
             this.label1.TabIndex = 2;
             this.label1.Text = "文件信息";
             // 
@@ -166,7 +166,7 @@
             this.label2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(25, 169);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 20);
+            this.label2.Size = new System.Drawing.Size(56, 17);
             this.label2.TabIndex = 5;
             this.label2.Text = "选择音轨";
             // 
@@ -176,7 +176,7 @@
             this.label3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.Location = new System.Drawing.Point(317, 212);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(69, 20);
+            this.label3.Size = new System.Drawing.Size(56, 17);
             this.label3.TabIndex = 6;
             this.label3.Text = "音轨信息";
             // 
@@ -197,13 +197,13 @@
             // 
             this.listBox_TrackList.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.listBox_TrackList.FormattingEnabled = true;
-            this.listBox_TrackList.ItemHeight = 20;
+            this.listBox_TrackList.ItemHeight = 17;
             this.listBox_TrackList.Items.AddRange(new object[] {
             "文件未载入。"});
             this.listBox_TrackList.Location = new System.Drawing.Point(29, 208);
             this.listBox_TrackList.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listBox_TrackList.Name = "listBox_TrackList";
-            this.listBox_TrackList.Size = new System.Drawing.Size(256, 244);
+            this.listBox_TrackList.Size = new System.Drawing.Size(256, 242);
             this.listBox_TrackList.TabIndex = 8;
             this.listBox_TrackList.SelectedIndexChanged += new System.EventHandler(this.listBox_TrackList_SelectedIndexChanged);
             // 
@@ -233,16 +233,16 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(28, 121);
+            this.label4.Location = new System.Drawing.Point(238, 135);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(259, 20);
+            this.label4.Size = new System.Drawing.Size(47, 17);
             this.label4.TabIndex = 12;
-            this.label4.Text = "ver 1.1          科林/sdercolin © 2015";
+            this.label4.Text = "ver 1.2";
             // 
             // logo
             // 
             this.logo.Image = global::HARMOLOID_Csharp.Properties.Resources.HARMOLOID;
-            this.logo.Location = new System.Drawing.Point(29, 53);
+            this.logo.Location = new System.Drawing.Point(29, 71);
             this.logo.Name = "logo";
             this.logo.Size = new System.Drawing.Size(256, 62);
             this.logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -251,7 +251,7 @@
             // 
             // HARMOLOID
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(828, 472);
             this.Controls.Add(this.label4);
@@ -273,7 +273,7 @@
             this.MaximizeBox = false;
             this.Name = "HARMOLOID";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "HARMOLOID 1.1";
+            this.Text = "HARMOLOID 1.2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HARMOLOID_FormClosing);
             this.Load += new System.EventHandler(this.c_Load);
             this.menuStrip1.ResumeLayout(false);

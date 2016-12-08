@@ -70,7 +70,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(24, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 20);
+            this.label1.Size = new System.Drawing.Size(68, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "当前音轨：";
             // 
@@ -79,7 +79,7 @@
             this.label_TonalizingTrack.AutoSize = true;
             this.label_TonalizingTrack.Location = new System.Drawing.Point(102, 18);
             this.label_TonalizingTrack.Name = "label_TonalizingTrack";
-            this.label_TonalizingTrack.Size = new System.Drawing.Size(54, 20);
+            this.label_TonalizingTrack.Size = new System.Drawing.Size(44, 17);
             this.label_TonalizingTrack.TabIndex = 1;
             this.label_TonalizingTrack.Text = "音轨名";
             // 
@@ -88,7 +88,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(24, 49);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 20);
+            this.label2.Size = new System.Drawing.Size(68, 17);
             this.label2.TabIndex = 2;
             this.label2.Text = "乐段列表：";
             // 
@@ -137,7 +137,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(24, 192);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 20);
+            this.label3.Size = new System.Drawing.Size(68, 17);
             this.label3.TabIndex = 4;
             this.label3.Text = "乐段编辑：";
             // 
@@ -146,7 +146,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(24, 221);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(69, 20);
+            this.label4.Size = new System.Drawing.Size(56, 17);
             this.label4.TabIndex = 5;
             this.label4.Text = "乐段编号";
             // 
@@ -155,7 +155,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(111, 221);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(84, 20);
+            this.label5.Size = new System.Drawing.Size(68, 17);
             this.label5.TabIndex = 6;
             this.label5.Text = "起始小节数";
             // 
@@ -164,7 +164,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(211, 221);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(84, 20);
+            this.label6.Size = new System.Drawing.Size(68, 17);
             this.label6.TabIndex = 7;
             this.label6.Text = "结束小节数";
             // 
@@ -173,16 +173,17 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(312, 220);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(39, 20);
+            this.label7.Size = new System.Drawing.Size(32, 17);
             this.label7.TabIndex = 8;
             this.label7.Text = "调性";
             // 
             // comboBox_PassageNum
             // 
+            this.comboBox_PassageNum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_PassageNum.FormattingEnabled = true;
             this.comboBox_PassageNum.Location = new System.Drawing.Point(28, 244);
             this.comboBox_PassageNum.Name = "comboBox_PassageNum";
-            this.comboBox_PassageNum.Size = new System.Drawing.Size(65, 28);
+            this.comboBox_PassageNum.Size = new System.Drawing.Size(65, 25);
             this.comboBox_PassageNum.TabIndex = 9;
             this.comboBox_PassageNum.SelectedIndexChanged += new System.EventHandler(this.comboBox_PassageNum_SelectedIndexChanged);
             // 
@@ -191,14 +192,14 @@
             this.textBox_StartBarNum.Enabled = false;
             this.textBox_StartBarNum.Location = new System.Drawing.Point(115, 245);
             this.textBox_StartBarNum.Name = "textBox_StartBarNum";
-            this.textBox_StartBarNum.Size = new System.Drawing.Size(80, 27);
+            this.textBox_StartBarNum.Size = new System.Drawing.Size(80, 23);
             this.textBox_StartBarNum.TabIndex = 10;
             // 
             // textBox_EndBarNum
             // 
             this.textBox_EndBarNum.Location = new System.Drawing.Point(215, 245);
             this.textBox_EndBarNum.Name = "textBox_EndBarNum";
-            this.textBox_EndBarNum.Size = new System.Drawing.Size(80, 27);
+            this.textBox_EndBarNum.Size = new System.Drawing.Size(80, 23);
             this.textBox_EndBarNum.TabIndex = 11;
             // 
             // button_PassageEditConfirm
@@ -216,7 +217,7 @@
             this.label_IsTonalized.AutoSize = true;
             this.label_IsTonalized.Location = new System.Drawing.Point(410, 18);
             this.label_IsTonalized.Name = "label_IsTonalized";
-            this.label_IsTonalized.Size = new System.Drawing.Size(39, 20);
+            this.label_IsTonalized.Size = new System.Drawing.Size(32, 17);
             this.label_IsTonalized.TabIndex = 15;
             this.label_IsTonalized.Text = "状态";
             // 
@@ -225,7 +226,7 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(298, 18);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(114, 20);
+            this.label9.Size = new System.Drawing.Size(92, 17);
             this.label9.TabIndex = 14;
             this.label9.Text = "调性标记状态：";
             // 
@@ -274,7 +275,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(509, 18);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(84, 20);
+            this.label8.Size = new System.Drawing.Size(68, 17);
             this.label8.TabIndex = 20;
             this.label8.Text = "小节列表：";
             // 
@@ -333,12 +334,12 @@
             "无调"});
             this.comboBox_TonalityInput.Location = new System.Drawing.Point(316, 244);
             this.comboBox_TonalityInput.Name = "comboBox_TonalityInput";
-            this.comboBox_TonalityInput.Size = new System.Drawing.Size(92, 28);
+            this.comboBox_TonalityInput.Size = new System.Drawing.Size(92, 25);
             this.comboBox_TonalityInput.TabIndex = 23;
             // 
             // Tonalization
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1039, 413);
             this.Controls.Add(this.comboBox_TonalityInput);

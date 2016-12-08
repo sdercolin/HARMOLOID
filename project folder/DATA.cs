@@ -446,9 +446,9 @@ namespace HARMOLOID_Csharp
                                         TrackList[TrackNum].PassageList[0].FirstBarNum = 0;
                                         TrackList[TrackNum].PassageList[0].LastBarNum = TrackList[TrackNum].BarNumTotal - 1;
                                         TrackList[TrackNum].PassageList[0].Tonality = 13;
-                                        TrackList[TrackNum].PassageNumTotal = 1;
-                                        TrackNum++;
+                                        TrackList[TrackNum].PassageNumTotal = 1;                   
                                     }
+                                    TrackNum++;
                                     TrackNumTotal = TrackNum;
                                 }
                             }
@@ -1223,6 +1223,7 @@ namespace HARMOLOID_Csharp
                                 HarmoTrack.SetAttribute("Name", HarmoList[HarmoNum].TrackName);
                                 HarmoUnit.SetAttribute("Group", new_id);
                                 XmlNode HarmoScore = null;
+                                XmlNode HarmoParameter = null;
                                 if (HarmoUnit.HasChildNodes)
                                 {
                                     for (int i = 0; i < HarmoUnit.ChildNodes.Count; i++)
@@ -1237,6 +1238,10 @@ namespace HARMOLOID_Csharp
                                                     if (HarmoSong.ChildNodes[j].Name == "Score")
                                                     {
                                                         HarmoScore = HarmoSong.ChildNodes[j];
+                                                    }
+                                                    if (HarmoSong.ChildNodes[j].Name == "Parameter")
+                                                    {
+                                                        HarmoParameter = HarmoSong.ChildNodes[j];
                                                     }
                                                 }
                                             }
@@ -1259,6 +1264,16 @@ namespace HARMOLOID_Csharp
                                             ((XmlElement)note).SetAttribute("PitchOctave", (HarmoList[HarmoNum].NoteList[NoteNum].NoteKey / 12 - 1).ToString());
                                         }
                                         NoteNum++;
+                                    }
+                                }
+                                if (HarmoParameter != null)
+                                {
+                                    for (int j = 0; j < HarmoParameter.ChildNodes.Count; j++)
+                                    {
+                                        if (HarmoParameter.ChildNodes[j].Name == "LogF0")
+                                        {
+                                            HarmoParameter.RemoveChild(HarmoParameter.ChildNodes[j]);
+                                        }
                                     }
                                 }
                             }
