@@ -1,4 +1,3 @@
-# HARMOLOID
-chorus generation tool for VOCALOID, UTAU, and CeVIO
+# This project is DEPRECATED
 
-Feel free to emailto: sder.colin@gmail.com if you have any questions or suggestions etc.
+Moved to https://github.com/sdercolin/harmoloid2
